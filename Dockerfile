@@ -53,7 +53,7 @@ COPY data_cleaning/Snakefile /home/$NB_USER/project_hydrology/
 
 #VOLUME /home/$NB_USER/project_hydrology/input_data
 
-#VOLUME /home/$NB_USER/project_hydrology/output_data
+VOLUME /home/$NB_USER/project_hydrology/output_data
 
 RUN chown -R $NB_UID:$NB_UID /home/$NB_USER/project_hydrology/
 
