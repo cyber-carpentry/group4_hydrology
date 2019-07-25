@@ -1,8 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[61]:
-
 
 #%matplotlib inline
 import os
@@ -11,9 +6,6 @@ import pandas as pd
 import numpy as np
 import sqlite3
 db_filepath = "hampt_rd_data.sqlite"
-
-
-# In[38]:
 
 
 def get_db_table_as_df(name, sql="""SELECT * FROM {};""", date_col=None, dbfilename=db_filepath):
@@ -25,9 +17,6 @@ def get_db_table_as_df(name, sql="""SELECT * FROM {};""", date_col=None, dbfilen
     if name == 'datavalues':
         df = make_date_index(df, 'Datetime')
     return df
-
-
-# In[39]:
 
 
 def get_id(typ, data):
@@ -49,16 +38,10 @@ def get_id(typ, data):
     return id_num
 
 
-# In[40]:
-
-
 def make_date_index(df, field, fmt=None):
     df.loc[:, field] = pd.to_datetime(df.loc[:, field], format=fmt)
     df.set_index(field, drop=True, inplace=True)
     return df
-
-
-# In[41]:
 
 
 def get_table_for_variable_code(variable_code, site_id=None, start_date=None, end_date=None):
@@ -84,9 +67,6 @@ def get_table_for_variable_code(variable_code, site_id=None, start_date=None, en
     return df
 
 
-# In[42]:
-
-
 def round_down_near_24(datetimes): # round down the times near midnight so the tide levels stay on the correct day
     close_time_idx = datetimes.indexer_between_time('23:29', '23:59')
     adjusted_times = datetimes[close_time_idx] - pd.Timedelta(minutes=15)
@@ -94,9 +74,6 @@ def round_down_near_24(datetimes): # round down the times near midnight so the t
     dt[close_time_idx] = adjusted_times
     dt = pd.DatetimeIndex(dt)
     return dt
-
-
-# In[43]:
 
 
 def cln_n_rnd_times(df):
@@ -108,14 +85,8 @@ def cln_n_rnd_times(df):
     return df
 
 
-# In[44]:
-
-
 def pivot_dv_df(df):
     return df.pivot(columns='SiteID', values='Value')
-
-
-# In[45]:
 
 
 def rename_cols(df, var_abbrev):
@@ -129,17 +100,11 @@ def rename_cols(df, var_abbrev):
         return df
 
 
-# In[46]:
-
-
 def filter_max_rain_time_dfs(rain_daily_df, time_df):
     timemx_filt = pd.DataFrame(np.where(rain_daily_df>0, time_df, np.datetime64('NaT')))
     timemx_filt.columns = time_df.columns
     timemx_filt.index = time_df.index
     return timemx_filt
-
-
-# In[47]:
 
 
 def tide_when_rain_max(rn_mx_time_df):
@@ -165,13 +130,9 @@ def tide_when_rain_max(rn_mx_time_df):
     return new_df
 
 
-# In[48]:
-
-
 def remove_duplicates(df):
     siteids = df['SiteID'].unique()
     df.reset_index(inplace=True)
-    #print df.shape
     non_duplicated = list()
     for site in siteids:
         df_site = df[df['SiteID'] == site]
@@ -181,11 +142,7 @@ def remove_duplicates(df):
         non_duplicated.extend(df_no_dups_idx.tolist())
     df = df.loc[non_duplicated]
     df.set_index('Datetime', drop=True, inplace=True)
-    #print df.shape 
     return df
-
-
-# In[49]:
 
 
 def daily_pivot_table(var_code, agg_function, abbreviation):    
@@ -203,156 +160,77 @@ def daily_pivot_table(var_code, agg_function, abbreviation):
 
 # #  Rainfall
 
-# In[50]:
-
-
 # get rainfall data at 15 min interval
 rain_df = get_table_for_variable_code('rainfall')
 
 
 # ## Daily Rainfall
 
-# In[51]:
-
-
 rain_daily15 = daily_pivot_table('rainfall', np.sum, '')
 rain_daily = daily_pivot_table('daily_rainfall', np.sum, '')
 rain_daily_comb_no_name = pd.concat([rain_daily, rain_daily15], axis=1)
 rain_daily_comb_named = rename_cols(rain_daily_comb_no_name, 'rd')
-#rain_daily_comb_named.head()
-
-
-# In[52]:
-
-
-#rain_daily_comb_named.tail()
 
 
 # ## Hourly Rainfall
-
-# In[53]:
-
 
 rain15 = pivot_dv_df(rain_df)
 rain_hourly_totals = rain15.rolling(window='H').sum()
 rhr_mx = rain_hourly_totals.resample('D').max()
 rhr_mx = rename_cols(rhr_mx, 'rhrmx')
-#rhr_mx.head()
-
-
-# In[54]:
-
 
 rhr_timemx = rain_hourly_totals.groupby(pd.TimeGrouper('D')).idxmax()
 rhr_timemx = rename_cols(rhr_timemx, 'rhr_mxtime')
 rhr_timemx = filter_max_rain_time_dfs(rain_daily15, rhr_timemx)
-#rhr_timemx.head()
 
 
 # ## 15-min max rainfall
 
-# In[55]:
-
-
 r15_mx = rain15.resample('D').max()
 r15_mx = rename_cols(r15_mx, 'r15mx')
-#r15_mx.head()
-
-
-# In[56]:
-
 
 r15_timemx = rain15.groupby(pd.TimeGrouper('D')).idxmax()
 r15_timemx = rename_cols(r15_timemx, 'r15_mxtime')
 r15_timemx = filter_max_rain_time_dfs(rain_daily15, r15_timemx)
-#r15_timemx.head()
 
 
 # ### Rain prev 3 days
 
-# In[57]:
-
-
 rain_prev_3_days = rain_daily_comb_no_name.shift(1).rolling(window=3).sum()
 rain_prev_3_days = rename_cols(rain_prev_3_days, 'r3d')
-#rain_prev_3_days.head()
-
-
-# In[58]:
-
-
-#rain_daily_comb_named['rd-14'][rain_daily_comb_named['rd-14']<0]
-
-
-# In[59]:
-
-
-#rain15.loc['2014-06-24']
-
-
-# In[60]:
-
 
 #rain_prev_3_days.plot.box()
 
 
 # #  Groundwater
 
-# In[62]:
-
-
 gw_df = daily_pivot_table('shallow_well_depth', np.mean, 'gw_av')
-#gw_df.head()
 
 
 # #  Tide
 
 # ## Average daily tide
 
-# In[63]:
-
-
 tide_df = daily_pivot_table('six_min_tide', np.mean, 'td_av')
-#tide_df.head()
 
 
 # ##  Tide when rain is at max
 
-# In[64]:
-
-
 td_r15mx = tide_when_rain_max(r15_timemx)
-#td_r15mx.head()
-
-
-# In[65]:
-
 
 td_rhrmx = tide_when_rain_max(rhr_timemx)
-#td_rhrmx.head()
 
 
 # ## HI/LOs
-
-# In[66]:
-
 
 hilos = []
 for v in ['high_tide', 'high_high_tide', 'low_tide', 'low_low_tide']:
     hilos.append(daily_pivot_table(v, np.mean, "".join(w[0] for w in v.split('_'))))
 
-
-# In[67]:
-
-
 hilo_df = pd.concat(hilos, axis=1)
-#hilo_df.head()
 
 
 # #  Wind
-
-# In[68]:
-
 
 wind_dfs = []
 for v in ['WDF2', 'WSF2', 'AWDR', 'AWND', 'WGF6', 'WSF6', 'WDF6', 'WS2min', 'WD2min']:
@@ -368,25 +246,13 @@ for v in ['WDF2', 'WSF2', 'AWDR', 'AWND', 'WGF6', 'WSF6', 'WDF6', 'WS2min', 'WD2
         abbr = v
     wind_dfs.append(daily_pivot_table(v, np.mean, abbr))
 all_wind = pd.concat(wind_dfs, axis=1)
-#all_wind.head()
-
-
-# In[69]:
-
 
 feature_df = pd.concat([all_wind, hilo_df, td_r15mx, td_rhrmx, tide_df, gw_df, r15_mx, rhr_mx, rain_daily_comb_named, rain_prev_3_days], axis=1)
 feature_df = feature_df.loc['2010-09-15':'2016-10-15']
-#feature_df.head()
 
-
-# 
+ 
 # ### Save Daily Observations to DB
 
-# In[70]:
-
-
-# con = sqlite3.connect(db_filename)
-# feature_df.to_sql(con=con, name="nor_daily_observations", if_exists="replace")
 feature_df.to_csv('nor_daily_observations_standalone.csv')
 
 
