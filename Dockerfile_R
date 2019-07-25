@@ -1,0 +1,11 @@
+ARG BASE_CONTAINER=jupyter/r-notebook
+FROM $BASE_CONTAINER
+
+USER root
+
+COPY *.csv /home/$NB_USER/hydro_r/
+COPY *.r /home/$NB_USER/hydro_r
+
+RUN chown -R $NB_GID:$NB_GID /home/$NB_USER/hydro_r
+
+USER $NB_GID
