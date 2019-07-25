@@ -20,7 +20,7 @@ pd.options.mode.chained_assignment = None  # default='warn'
 
 # In this case we are just focusing on the subset of points that is in the downtown area thus the "subset_floods."
 
-flood_events = pd.read_csv('flood_events.csv')
+flood_events = pd.read_csv('input_data/flood_events.csv')
 flood_events['event_date'] = pd.to_datetime(flood_events['event_date'])
 flood_events['event_name'] = flood_events['event_name'].str.strip()
 flood_events['dates'] = pd.to_datetime(flood_events['dates'])
@@ -231,4 +231,4 @@ avdf['llt'] = np.where(avdf['llt'].isnull(), avdf['lt'], avdf['llt'])
 avdf['WGF6'] = np.where(avdf['WGF6'].isnull(), avdf['AWND'], avdf['WGF6'])
 
 
-avdf.to_csv('for_model_avgs.csv')
+avdf.to_csv('input_data/for_model_avgs.csv')
