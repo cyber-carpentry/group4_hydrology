@@ -11,7 +11,7 @@ import sqlite3
 
 # ### Read in the data
 
-cds = pd.read_csv('input_data/STORM_data_flooded_streets_2010-2016.csv')
+cds = pd.read_csv('STORM_data_flooded_streets_2010-2016.csv')
 
 
 # ### Index by location name and subset to just columns we want
