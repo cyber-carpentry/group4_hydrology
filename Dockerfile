@@ -48,10 +48,14 @@ COPY *.py  /home/$NB_USER/project_hydrology/
 
 COPY *.csv /home/$NB_USER/project_hydrology/
 
-VOLUME /home/$NB_USER/project_hydrology/input_data
+RUN mkdir -p /home/$NB_USER/project_hydrology/input_data
+RUN mkdir -p /home/$NB_USER/project_hydrology/output_data
 
+VOLUME /home/$NB_USER/project_hydrology/input_data
 VOLUME /home/$NB_USER/project_hydrology/output_data
 
-RUN chown -R $NB_UID:$NB_UID /home/$NB_USER/project_hydrology/
+RUN chown -R $NB_UID:$NB_GID /home/$NB_USER/project_hydrology/
+RUN chmod 775 /home/$NB_USER/project_hydrology/input_data
+RUN chmod 775 /home/$NB_USER/project_hydrology/output_data
 
 USER $NB_UID
