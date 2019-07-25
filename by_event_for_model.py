@@ -107,7 +107,7 @@ event_df['max_days_away'] = max_days
 # event_df = event_df[event_df['max_days_away']<10]
 
 
-feature_df = pd.read_csv('nor_daily_observations_standalone.csv')
+feature_df = pd.read_csv('input_data/nor_daily_observations_standalone.csv')
 feature_df['Datetime'] = pd.to_datetime(feature_df['Datetime'])
 feature_df.set_index('Datetime', inplace = True)
 
@@ -173,7 +173,7 @@ event_df_for_storage['dates'] = event_df_for_storage['dates'].apply(str)
 event_df_for_storage['days_away_from_event'] = event_df_for_storage['days_away_from_event'].apply(str)
 event_df_for_storage.rename(columns={'index':'event_date'}, inplace=True)
 
-event_df_for_storage.to_csv('{}event_data.csv'.format(data_dir), index=False)
+# event_df_for_storage.to_csv('{}event_data.csv'.format(data_dir), index=False)
 
 
 # ### Combining with the non-flooding event data
