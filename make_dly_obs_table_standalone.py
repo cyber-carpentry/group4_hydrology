@@ -253,7 +253,7 @@ feature_df = feature_df.loc['2010-09-15':'2016-10-15']
  
 # ### Save Daily Observations to DB
 
-feature_df.to_csv('nor_daily_observations_standalone.csv')
+feature_df.to_csv('input_data/nor_daily_observations_standalone.csv')
 
 
 
