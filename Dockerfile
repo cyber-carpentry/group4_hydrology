@@ -47,7 +47,7 @@ RUN mkdir /home/$NB_USER/project_hydrology && cd /home/$NB_USER/project_hydrolog
 
 COPY *.py  /home/$NB_USER/project_hydrology/
 
-COPY *.csv /home/$NB_USER/project_hydrology/
+COPY *.csv /home/$NB_USER/project_hydrology/input_data/
 
 COPY data_cleaning/Snakefile /home/$NB_USER/project_hydrology/
 
