@@ -58,7 +58,7 @@ remove_cols= function(l, cols){
 # }
 
 
-df = read.csv('input_data/for_model_avgs.csv', )
+df = read.csv('for_model_avgs.csv', )
 
 #colnames(df)
 
@@ -104,8 +104,8 @@ for (i in 1:101){
 	  colnames(all_trn_df) = c('all_trn', 'all_pred_trn')
 	  all_tst_df = data.frame(test_out_data, unlist(pred_test))
 	  colnames(all_tst_df) = c('all_tst', 'all_pred_tst')
-	  write.table(all_trn_df, paste('output_data/', model, '_', suffix, '_train.csv', sep=""), append=TRUE,  sep=",", col.names = F)
-	  write.table(all_tst_df, paste('output_data/', model, '_', suffix, '_test.csv', sep=""), append=TRUE,  sep=",", col.names = F)
+	  write.table(all_trn_df, paste(model, '_', suffix, '_train.csv', sep=""), append=TRUE,  sep=",", col.names = F)
+	  write.table(all_tst_df, paste(model, '_', suffix, '_test.csv', sep=""), append=TRUE,  sep=",", col.names = F)
 
 	  if (model == 'rf'){
       impo = model_results[3]
@@ -117,4 +117,4 @@ for (i in 1:101){
 colnames(import_df) = 1:ncol(import_df)
 row.names(import_df) = in_col_names
 #write.csv(import_df, paste('rf_impo_', suffix, sep=""), append=TRUE)
-write.csv(import_df, paste('output_data/rf_impo_', suffix, ".csv", sep=""))
+write.csv(import_df, paste('rf_impo_', suffix, ".csv", sep=""))
