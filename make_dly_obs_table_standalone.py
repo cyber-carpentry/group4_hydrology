@@ -5,7 +5,7 @@ import sys
 import pandas as pd
 import numpy as np
 import sqlite3
-db_filepath = "hampt_rd_data.sqlite"
+db_filepath = "input_data/hampt_rd_data.sqlite"
 
 
 def get_db_table_as_df(name, sql="""SELECT * FROM {};""", date_col=None, dbfilename=db_filepath):
