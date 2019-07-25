@@ -6,7 +6,7 @@ rule all:
           "output_data/rf_impo_out.csv"
 
 rule model_flood_rf_ps:
-  input: "for_model_avgs.csv"
+  input: "input_data/for_model_avgs.csv"
   output: "output_data/poisson_out_test.csv",
           "output_data/poisson_out_train.csv",
           "output_data/rf_out_test.csv",
@@ -24,7 +24,7 @@ rule by_event_for_model:
 rule prepare_flood_events:
   input: "input_data/STORM_data_flooded_streets_2010-2016.csv"
   output: "input_data/flood_events.csv"
-  shell:"input_data/python prepare_flood_events_table.py"
+  shell:"python prepare_flood_events_table.py"
 
 rule make_dly_obs_tbl:
   input: "input_data/hampt_rd_data.sqlite"
@@ -35,4 +35,4 @@ rule make_dly_obs_tbl:
 rule download_db:
   input:
   output: "input_data/hampt_rd_data.sqlite"
-  shell:"wget https://www.hydroshare.org/resource/9e1b23607ac240588ba50d6b5b9a49b5/data/contents/hampt_rd_data.sqlite"
+  shell:"wget -O input_data/hampt_rd_data.sqlite https://www.hydroshare.org/resource/9e1b23607ac240588ba50d6b5b9a49b5/data/contents/hampt_rd_data.sqlite"
