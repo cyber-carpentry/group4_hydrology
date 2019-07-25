@@ -36,7 +36,7 @@ cds['event_name'] = event_names.str.strip()+ '-' + event_date_str
 
 del cds['event']
 
-cds.to_csv('input_data/flood_events.csv')
+cds.to_csv('flood_events.csv')
 
 
 

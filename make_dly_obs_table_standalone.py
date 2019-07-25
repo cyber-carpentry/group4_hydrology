@@ -5,7 +5,7 @@ import sys
 import pandas as pd
 import numpy as np
 import sqlite3
-db_filepath = "input_data/hampt_rd_data.sqlite"
+db_filepath = "../input_hydrology/hampt_rd_data.sqlite"
 
 
 def get_db_table_as_df(name, sql="""SELECT * FROM {};""", date_col=None, dbfilename=db_filepath):
@@ -253,7 +253,7 @@ feature_df = feature_df.loc['2010-09-15':'2016-10-15']
  
 # ### Save Daily Observations to DB
 
-feature_df.to_csv('input_data/nor_daily_observations_standalone.csv')
+feature_df.to_csv('nor_daily_observations_standalone.csv')
 
 
 
