@@ -1,18 +1,5 @@
 rule all:
-  input: "output_data/poisson_out_test.csv",
-          "output_data/poisson_out_train.csv",
-          "output_data/rf_out_test.csv",
-          "output_data/rf_out_train.csv",
-          "output_data/rf_impo_out.csv"
-
-rule model_flood_rf_ps:
   input: "input_data/for_model_avgs.csv"
-  output: "output_data/poisson_out_test.csv",
-          "output_data/poisson_out_train.csv",
-          "output_data/rf_out_test.csv",
-          "output_data/rf_out_train.csv",
-          "output_data/rf_impo_out.csv"
-  shell: "Rscript model_flood_counts_rf_ps_cln.r"
 
 rule by_event_for_model:
   input: 

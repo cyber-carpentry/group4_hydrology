@@ -38,7 +38,8 @@ RUN conda install --quiet --yes \
     'xlrd'  && \
     conda clean --all -f -y
 
-
+# Install snakemake
+RUN conda install -y -c conda-forge -c bioconda snakemake-minimal
 
 RUN mkdir /home/$NB_USER/project_hydrology && cd /home/$NB_USER/project_hydrology
 
@@ -48,6 +49,8 @@ COPY *.py  /home/$NB_USER/project_hydrology/
 
 COPY *.csv /home/$NB_USER/project_hydrology/
 
+COPY data_cleaning/Snakefile /home/$NB_USER/project_hydrology/
+
 VOLUME /home/$NB_USER/project_hydrology/input_data
 
 VOLUME /home/$NB_USER/project_hydrology/output_data
@@ -55,3 +58,6 @@ VOLUME /home/$NB_USER/project_hydrology/output_data
 RUN chown -R $NB_UID:$NB_UID /home/$NB_USER/project_hydrology/
 
 USER $NB_UID
+
+# Run the snakemake
+# RUN snakemake
