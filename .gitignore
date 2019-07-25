@@ -1,2 +1,4 @@
 hampt_rd_data.sqlite
-
+*.ipynb
+.event_data.csv
+.ipynb_checkpoints/
