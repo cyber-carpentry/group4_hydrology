@@ -4,15 +4,15 @@ rule all:
     "../model_analysis/flood_events.csv",
     "../model_analysis/nor_daily_observations_standalone.csv"    
 
-rule prepare_flood_events:
-  input: "../input_data/STORM_data_flooded_streets_2010-2016.csv"
-  output: "../input_data/flood_events.csv"
-  shell:"python prepare_flood_events_table.py"
-
 rule make_dly_obs_tbl:
   input: "../input_data/hampt_rd_data.sqlite"
   output: "../input_data/nor_daily_observations_standalone.csv"
   shell:"python make_dly_obs_table_standalone.py"
+
+rule prepare_flood_events:
+  input: "../input_data/STORM_data_flooded_streets_2010-2016.csv"
+  output: "../input_data/flood_events.csv"
+  shell:"python prepare_flood_events_table.py"
 
 rule by_event_for_model:
   input: 
