@@ -1,5 +1,8 @@
 rule all:
-  input: "../input_data/for_model_avgs.csv"
+  input:
+    "../model_analysis/for_model_avgs.csv",
+    "../model_analysis/flood_events.csv",
+    "../model_analysis/nor_daily_observations_standalone.csv"    
 
 rule by_event_for_model:
   input: 
@@ -17,3 +20,18 @@ rule make_dly_obs_tbl:
   input: "../input_data/hampt_rd_data.sqlite"
   output: "nor_daily_observations_standalone.csv"
   shell:"python make_dly_obs_table_standalone.py"
+
+rule move_files1:
+  input: "../input_data/flood_events.csv",
+  output: "../model_analysis/flood_events.csv",
+  shell: "mv ../input_data/flood_events.csv ../model_analysis/flood_events.csv"
+
+rule move_files2:
+  input: "../input_data/nor_daily_observations_standalone.csv"
+  output: "../model_analysis/nor_daily_observations_standalone.csv"
+  shell: "mv ../input_data/nor_daily_observations_standalone.csv ../model_analysis/nor_daily_observations_standalone.csv"
+
+rule move_files3:
+  input: "../input_data/for_model_avgs.csv"
+  output: "../model_analysis/for_model_avgs.csv"
+  shell: "mv ../input_data/for_model_avgs.csv ../model_analysis/for_model_avgs.csv"
