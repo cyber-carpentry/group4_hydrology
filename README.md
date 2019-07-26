@@ -12,6 +12,7 @@ wget -O input_data/hampt_rd_data.sqlite https://www.hydroshare.org/resource/9e1b
 
 docker build --tag=data_cleaning . 
 docker run -it -v $(pwd)/:/home/jovyan/project_hydrology data_cleaning bash
-snakemake -s Snakefile_datacleaning
+cd project_hydrology
+snakemake
 exit
 ```
