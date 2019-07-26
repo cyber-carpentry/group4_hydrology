@@ -231,4 +231,4 @@ avdf['llt'] = np.where(avdf['llt'].isnull(), avdf['lt'], avdf['llt'])
 avdf['WGF6'] = np.where(avdf['WGF6'].isnull(), avdf['AWND'], avdf['WGF6'])
 
 
-avdf.to_csv('for_model_avgs.csv')
+avdf.to_csv('../input_data/for_model_avgs.csv')

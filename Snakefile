@@ -17,7 +17,13 @@ rule model_flood_rf_ps:
 
 # rule to run model analysis
 
-# rule to run data cleaning
+rule process_data:
+  input: "input_data/hampt_rd_data.sqlite",
+         "input_data/STORM_data_flooded_streets_2010-2016.csv"
+  output: "input_data/for_model_avgs.csv"
+  shell: "docker build --tag=data_cleaning -f Dockerfile . 
+          docker run -v $(pwd)/:/home/jovyan/project_hydrology"
+
 
 # if data is not present, download it
 rule download_db:

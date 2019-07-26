@@ -183,7 +183,6 @@ rhr_timemx = rain_hourly_totals.groupby(pd.TimeGrouper('D')).idxmax()
 rhr_timemx = rename_cols(rhr_timemx, 'rhr_mxtime')
 rhr_timemx = filter_max_rain_time_dfs(rain_daily15, rhr_timemx)
 
-
 # ## 15-min max rainfall
 
 r15_mx = rain15.resample('D').max()
@@ -205,7 +204,6 @@ rain_prev_3_days = rename_cols(rain_prev_3_days, 'r3d')
 # #  Groundwater
 
 gw_df = daily_pivot_table('shallow_well_depth', np.mean, 'gw_av')
-
 
 # #  Tide
 
