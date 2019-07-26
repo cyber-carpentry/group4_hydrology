@@ -1,6 +1,0 @@
-ARG BASE_CONTAINER=jupyter/r-notebook
-FROM $BASE_CONTAINER
-
-USER root
-
-RUN Rscript model_flood_counts_rf_ps_cln.r

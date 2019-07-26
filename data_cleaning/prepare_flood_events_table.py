@@ -11,7 +11,7 @@ import sqlite3
 
 # ### Read in the data
 
-cds = pd.read_csv('STORM_data_flooded_streets_2010-2016.csv')
+cds = pd.read_csv('../input_data/STORM_data_flooded_streets_2010-2016.csv')
 
 
 # ### Index by location name and subset to just columns we want
@@ -36,7 +36,7 @@ cds['event_name'] = event_names.str.strip()+ '-' + event_date_str
 
 del cds['event']
 
-cds.to_csv('flood_events.csv')
+cds.to_csv('../input_data/flood_events.csv')
 
 
 

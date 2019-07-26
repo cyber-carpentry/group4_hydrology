@@ -38,24 +38,11 @@ RUN conda install --quiet --yes \
     'xlrd'  && \
     conda clean --all -f -y
 
+# Install snakemake
+RUN conda install -y -c conda-forge -c bioconda snakemake-minimal
 
 
-RUN mkdir /home/$NB_USER/project_hydrology && cd /home/$NB_USER/project_hydrology
-
-#ADD by_event_for_model.py make_dly_obs_table_standalone.py prepare_flood_events_table.py STORM_data_flooded_streets_2010-2016.csv
-
-COPY *.py  /home/$NB_USER/project_hydrology/
-
-COPY *.csv /home/$NB_USER/project_hydrology/
-
-#RUN mkdir -p /home/$NB_USER/project_hydrology/input_data
-#RUN mkdir -p /home/$NB_USER/project_hydrology/output_data
-
-VOLUME /home/$NB_USER/project_hydrology/input_data
-VOLUME /home/$NB_USER/project_hydrology/output_data
-
-#RUN chown -R $NB_UID:$NB_GID /home/$NB_USER/project_hydrology/
-#RUN chmod 777 /home/$NB_USER/project_hydrology/input_data
-#RUN chmod 777 /home/$NB_USER/project_hydrology/output_data
+# Run snakemake
+#RUN cd project_hydrology
 
 USER $NB_UID
