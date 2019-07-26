@@ -14,22 +14,16 @@ rule model_flood_rf_ps:
           "output_data/rf_impo_out.csv"
   shell: "Rscript model_flood_counts_rf_ps_cln.r"
 
-rule by_event_for_model:
-  input: 
-    "input_data/nor_daily_observations_standalone.csv",
-    "input_data/flood_events.csv"
+
+# rule to run model analysis
+
+rule process_data:
+  input: "input_data/hampt_rd_data.sqlite",
+         "input_data/STORM_data_flooded_streets_2010-2016.csv"
   output: "input_data/for_model_avgs.csv"
-  shell:"python by_event_for_model.py"
+  shell: "docker build --tag=data_cleaning -f Dockerfile . 
+          docker run -v $(pwd)/:/home/jovyan/project_hydrology data_cleaning"
 
-rule prepare_flood_events:
-  input: "input_data/STORM_data_flooded_streets_2010-2016.csv"
-  output: "input_data/flood_events.csv"
-  shell:"python prepare_flood_events_table.py"
-
-rule make_dly_obs_tbl:
-  input: "input_data/hampt_rd_data.sqlite"
-  output: "input_data/nor_daily_observations_standalone.csv"
-  shell:"python make_dly_obs_table_standalone.py"
 
 # if data is not present, download it
 rule download_db:

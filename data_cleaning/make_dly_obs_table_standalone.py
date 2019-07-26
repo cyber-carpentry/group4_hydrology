@@ -5,7 +5,7 @@ import sys
 import pandas as pd
 import numpy as np
 import sqlite3
-db_filepath = "../input_hydrology/hampt_rd_data.sqlite"
+db_filepath = "../input_data/hampt_rd_data.sqlite"
 
 
 def get_db_table_as_df(name, sql="""SELECT * FROM {};""", date_col=None, dbfilename=db_filepath):
@@ -183,7 +183,6 @@ rhr_timemx = rain_hourly_totals.groupby(pd.TimeGrouper('D')).idxmax()
 rhr_timemx = rename_cols(rhr_timemx, 'rhr_mxtime')
 rhr_timemx = filter_max_rain_time_dfs(rain_daily15, rhr_timemx)
 
-
 # ## 15-min max rainfall
 
 r15_mx = rain15.resample('D').max()
@@ -205,7 +204,6 @@ rain_prev_3_days = rename_cols(rain_prev_3_days, 'r3d')
 # #  Groundwater
 
 gw_df = daily_pivot_table('shallow_well_depth', np.mean, 'gw_av')
-
 
 # #  Tide
 
@@ -253,7 +251,7 @@ feature_df = feature_df.loc['2010-09-15':'2016-10-15']
  
 # ### Save Daily Observations to DB
 
-feature_df.to_csv('nor_daily_observations_standalone.csv')
+feature_df.to_csv('../input_data/nor_daily_observations_standalone.csv')
 
 
 
