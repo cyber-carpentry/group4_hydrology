@@ -1,5 +1,5 @@
 # group4_hydrology
-Goal: to replicate analysis from the Sadler et al (2018) study of flooding in a coastal city. Running the code correctly will result in the production of 5 csv files in the output_data folder
+Goal: to replicate data cleaning portion of analysis from the Sadler et al (2018) study of flooding in a coastal city. Running the code correctly will result in the production of a csv file in the input_data folder called for_model_avgs.csv
 
 ### Instructions:
 On either a local or virtual machine, navigate to a convenient folder for cloning this repo
