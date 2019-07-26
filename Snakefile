@@ -22,7 +22,7 @@ rule process_data:
          "input_data/STORM_data_flooded_streets_2010-2016.csv"
   output: "input_data/for_model_avgs.csv"
   shell: "docker build --tag=data_cleaning -f Dockerfile . 
-          docker run -v $(pwd)/:/home/jovyan/project_hydrology"
+          docker run -v $(pwd)/:/home/jovyan/project_hydrology data_cleaning"
 
 
 # if data is not present, download it
