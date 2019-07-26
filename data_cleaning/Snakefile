@@ -18,7 +18,7 @@ rule prepare_flood_events:
 
 rule make_dly_obs_tbl:
   input: "../input_data/hampt_rd_data.sqlite"
-  output: "nor_daily_observations_standalone.csv"
+  output: "../input_data/nor_daily_observations_standalone.csv"
   shell:"python make_dly_obs_table_standalone.py"
 
 rule move_files1:
